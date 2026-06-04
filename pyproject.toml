@@ -1,0 +1,14 @@
+[project]
+name = "netwatch"
+version = "0.1.0"
+description = "Linux Network Monitoring Tool"
+requires-python = ">=3.10"
+
+dependencies = [
+    "rich",
+    "ping3",
+    "psutil"
+]
+
+[project.scripts]
+net = "netwatch.cli:main"
