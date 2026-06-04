@@ -8,11 +8,11 @@ Lightweight real-time network monitoring tool for Linux terminals.
 
 ## Features
 
-* Live ping monitoring
-* Download speed monitoring
-* Upload speed monitoring
-* Real-time terminal dashboard
-* Simple CLI interface
+- Real-time ping monitoring
+- Live upload/download tracking
+- Terminal dashboard powered by Rich
+- Lightweight and fast
+- Simple CLI interface
 
 ## Installation
 
