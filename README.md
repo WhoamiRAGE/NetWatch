@@ -4,7 +4,7 @@
 
 
 
-A lightweight Linux network monitoring tool written in Python.
+Lightweight real-time network monitoring tool for Linux terminals.
 
 ## Features
 
