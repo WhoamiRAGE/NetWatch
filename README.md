@@ -1,6 +1,7 @@
 # NetWatch
 
-<img width="287" height="288" alt="image" src="https://github.com/user-attachments/assets/a7db2d9c-779d-4e17-b220-18ea3f3e4caf" />
+<img width="244" height="166" alt="image" src="https://github.com/user-attachments/assets/0034caf3-da4c-4c5f-b633-c245292ff83b" />
+
 
 
 A lightweight Linux network monitoring tool written in Python.
