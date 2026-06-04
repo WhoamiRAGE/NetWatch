@@ -1,5 +1,8 @@
 # NetWatch
 
+<img width="287" height="288" alt="image" src="https://github.com/user-attachments/assets/a7db2d9c-779d-4e17-b220-18ea3f3e4caf" />
+
+
 A lightweight Linux network monitoring tool written in Python.
 
 ## Features
@@ -36,19 +39,6 @@ Show version:
 
 ```bash
 net --version
-```
-
-## Example
-
-```text
-      NetWatch
-┏━━━━━━━━━━┳━━━━━━━━━━┓
-┃ Metric   ┃ Value    ┃
-┡━━━━━━━━━━╇━━━━━━━━━━┩
-│ Ping     │ 69 ms    │
-│ Download │ 1.24 MB/s│
-│ Upload   │ 0.15 MB/s│
-└──────────┴──────────┘
 ```
 
 ## Roadmap
