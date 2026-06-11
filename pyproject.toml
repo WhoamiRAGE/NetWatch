@@ -11,4 +11,4 @@ dependencies = [
 ]
 
 [project.scripts]
-net = "netwatch.cli:main"
+netwatch = "netwatch.cli:main"
