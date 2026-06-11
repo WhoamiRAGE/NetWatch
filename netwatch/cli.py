@@ -1,4 +1,5 @@
 import sys
+from importlib.metadata import version
 
 from rich.console import Console
 from rich.table import Table
@@ -6,12 +7,10 @@ from rich.table import Table
 from netwatch.dashboard import run
 from netwatch.scan import scan_network, resolve_host
 
-VERSION = "0.2.0"
-
 
 def main():
     if "--version" in sys.argv:
-        print(f"NetWatch {VERSION}")
+        print(f"NetWatch {version('netwatch')}")
         return
 
     if len(sys.argv) > 1 and sys.argv[1] == "scan":
@@ -36,3 +35,7 @@ def main():
         return
 
     run()
+
+
+if __name__ == "__main__":
+    main()
