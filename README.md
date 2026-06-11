@@ -16,17 +16,7 @@ Lightweight real-time network monitoring tool for Linux terminals.
 
 ## Installation
 
-### From Source
-
-```bash
-git clone git@github.com:WhoamiRAGE/NetWatch.git
-cd NetWatch
-
-python -m venv .venv
-source .venv/bin/activate
-
-pip install -e .
-```
+curl -fsSL https://raw.githubusercontent.com/WhoamiRAGE/NetWatch/main/install.sh | bash
 
 ## Usage
 
