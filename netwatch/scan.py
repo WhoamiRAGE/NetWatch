@@ -36,3 +36,25 @@ def resolve_host(ip):
         return socket.gethostbyaddr(ip)[0]
     except Exception:
         return "Unknown"
+import re
+
+def get_mac(ip):
+    try:
+        result = subprocess.run(
+            ["ip", "neigh", "show", ip],
+            capture_output=True,
+            text=True,
+        )
+
+        match = re.search(
+            r"lladdr ([0-9a-f:]{17})",
+            result.stdout.lower()
+        )
+
+        if match:
+            return match.group(1)
+
+    except Exception:
+        pass
+
+    return "Unknown"
