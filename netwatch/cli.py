@@ -10,6 +10,7 @@ from netwatch.scan import scan_network, resolve_host, get_mac
 from netwatch.vendor import get_vendor
 from netwatch.ports import scan_ports
 from netwatch.device import detect_device
+from netwatch.wifi import get_wifi_info
 
 
 def enrich_host(host):
@@ -22,48 +23,88 @@ def enrich_host(host):
     return (host, vendor, mac, device, hostname, ports_str)
 
 
+def cmd_scan(console):
+    console.print("[dim]Scanning network...[/dim]")
+    hosts = scan_network()
+
+    if not hosts:
+        console.print("[red]No active hosts found.[/red]")
+        return
+
+    console.print(f"[green]Found {len(hosts)} active hosts[/green]\n")
+
+    table = Table(
+        title="Network Scan",
+        header_style="bold cyan",
+        border_style="bright_black",
+        title_style="bold white",
+    )
+    table.add_column("IP Address", style="bold")
+    table.add_column("Vendor", style="green")
+    table.add_column("MAC Address", style="dim")
+    table.add_column("Device Type")
+    table.add_column("Hostname", style="dim")
+    table.add_column("Open Ports", style="yellow")
+
+    with ThreadPoolExecutor(max_workers=32) as executor:
+        futures = {executor.submit(enrich_host, h): h for h in hosts}
+        results = []
+        for future in as_completed(futures):
+            results.append(future.result())
+
+    results.sort(key=lambda x: list(map(int, x[0].split("."))))
+
+    for row in results:
+        table.add_row(*row)
+
+    console.print(table)
+
+
+def cmd_wifi(console):
+    wifi = get_wifi_info()
+
+    if not wifi:
+        console.print("[red]No wireless interface found.[/red]")
+        return
+
+    table = Table(
+        title="Wifi Info",
+        header_style="bold cyan",
+        border_style="bright_black",
+        title_style="bold white",
+    )
+    table.add_column("Property", style="dim", width=14)
+    table.add_column("Value", style="bold green")
+
+    table.add_row("Interface", wifi.get("interface", "Unknown"))
+    table.add_row("SSID", wifi.get("ssid", "Unknown"))
+    table.add_row("Signal", wifi.get("signal", "Unknown"))
+    table.add_row("RX Rate", wifi.get("rx_rate", "Unknown"))
+    table.add_row("TX Rate", wifi.get("tx_rate", "Unknown"))
+
+    console.print(table)
+
+
 def main():
+    console = Console()
+
     if "--version" in sys.argv:
         print(f"NetWatch {version('netwatch')}")
         return
 
-    if len(sys.argv) > 1 and sys.argv[1] == "scan":
-        console = Console()
+    if len(sys.argv) > 1:
+        cmd = sys.argv[1]
 
-        console.print("[dim]Scanning network...[/dim]")
-        hosts = scan_network()
-
-        if not hosts:
-            console.print("[red]No active hosts found.[/red]")
+        if cmd == "scan":
+            cmd_scan(console)
             return
 
-        console.print(f"[green]Found {len(hosts)} active hosts[/green]\n")
+        if cmd == "wifi":
+            cmd_wifi(console)
+            return
 
-        table = Table(
-            title="Network Scan",
-            header_style="bold cyan",
-            border_style="bright_black",
-            title_style="bold white",
-        )
-        table.add_column("IP Address", style="bold")
-        table.add_column("Vendor", style="green")
-        table.add_column("MAC Address", style="dim")
-        table.add_column("Device Type")
-        table.add_column("Hostname", style="dim")
-        table.add_column("Open Ports", style="yellow")
-
-        with ThreadPoolExecutor(max_workers=32) as executor:
-            futures = {executor.submit(enrich_host, h): h for h in hosts}
-            results = []
-            for future in as_completed(futures):
-                results.append(future.result())
-
-        results.sort(key=lambda x: list(map(int, x[0].split("."))))
-
-        for row in results:
-            table.add_row(*row)
-
-        console.print(table)
+        console.print(f"[red]Unknown command: {cmd}[/red]")
+        console.print("Usage: netwatch [scan|wifi|--version]")
         return
 
     run()

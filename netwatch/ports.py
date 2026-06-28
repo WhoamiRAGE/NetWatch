@@ -1,15 +1,17 @@
 import socket
 
 COMMON_PORTS = [
-    22,    # SSH
-    53,    # DNS
-    80,    # HTTP
-    139,   # NetBIOS
-    443,   # HTTPS
-    445,   # SMB
-    8080,  # Web
-    8008,  # Chromecast
-    8009,  # Chromecast
+    22,     # SSH
+    53,     # DNS
+    80,     # HTTP
+    139,    # NetBIOS
+    443,    # HTTPS
+    445,    # SMB
+    5353,   # mDNS (Apple/Android)
+    8080,   # Web
+    8008,   # Chromecast
+    8009,   # Chromecast
+    62078,  # iOS pairing
 ]
 
 def scan_ports(ip):
@@ -20,8 +22,7 @@ def scan_ports(ip):
         sock.settimeout(0.3)
 
         try:
-            result = sock.connect_ex((ip, port))
-            if result == 0:
+            if sock.connect_ex((ip, port)) == 0:
                 open_ports.append(str(port))
         except Exception:
             pass
