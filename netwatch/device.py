@@ -1,19 +1,26 @@
 def detect_device(vendor, hostname, ports):
     hostname = hostname.lower()
+    vendor = vendor.lower()
 
     if hostname == "_gateway":
-        return "📡 Router"
+        return "Router"
 
-    if "apple" in vendor.lower():
-        return "🍎 Apple Device"
+    if "apple" in vendor:
+        return "Apple Device"
 
-    if "xiaomi" in vendor.lower():
-        return "📱 Xiaomi Device"
+    if "xiaomi" in vendor:
+        return "Xiaomi Device"
+
+    if "samsung" in vendor:
+        return "Samsung Device"
+
+    if "intel" in vendor:
+        return "PC / Laptop"
 
     if 445 in ports:
-        return "🖥 Windows PC"
+        return "Windows PC"
 
     if 22 in ports:
-        return "🐧 Linux Device"
+        return "Linux Device"
 
-    return "❓ Unknown"
+    return "Unknown"
