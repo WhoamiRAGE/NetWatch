@@ -1,52 +1,46 @@
 # NetWatch
 
-<img width="244" height="166" alt="image" src="https://github.com/user-attachments/assets/0034caf3-da4c-4c5f-b633-c245292ff83b" />
-
-
-
-Lightweight real-time network monitoring tool for Linux terminals.
+A terminal-based network monitoring tool for Linux.
 
 ## Features
 
-- Real-time ping monitoring
-- Live upload/download tracking
-- Terminal dashboard powered by Rich
-- Lightweight and fast
-- Simple CLI interface
+- Real-time ping, download/upload speed and wifi info
+- Local network scan (active hosts, MAC, vendor, open ports)
+- Automatic subnet detection
+- Device type detection (router, mobile, Windows, Linux...)
+- Fast results with parallel scanning
 
 ## Installation
 
+```bash
 curl -fsSL https://raw.githubusercontent.com/WhoamiRAGE/NetWatch/main/install.sh | bash
+```
+
+Or manually:
+
+```bash
+git clone https://github.com/WhoamiRAGE/NetWatch.git
+cd NetWatch
+pip install -e . --break-system-packages
+```
 
 ## Usage
 
-Start the dashboard:
-
 ```bash
-net
+netwatch                             # Live dashboard
+netwatch scan                        # Scan local network
+netwatch scan --range 10.0.0.0/24   # Scan a specific range
+netwatch wifi                        # Show wifi info
+netwatch --version
+netwatch --help
 ```
-
-Show version:
-
-```bash
-net --version
-```
-
-## Roadmap
-
-* [ ] Packet loss monitoring
-* [ ] Average ping statistics
-* [ ] Min / Max ping
-* [ ] Wi-Fi signal strength
-* [ ] JSON output
-* [ ] Interface selection
-* [ ] Nix Flake support
 
 ## Requirements
 
-* Linux
-* Python 3.10+
-* Network access
+- Python 3.10+
+- Linux
+- `iw` (for wifi info)
+- Root recommended for full scan results (MAC addresses)
 
 ## License
 
