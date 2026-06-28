@@ -2,10 +2,12 @@ from time import sleep
 
 from rich.live import Live
 from rich.table import Table
+from rich.text import Text
 
 from netwatch.ping import get_ping
 from netwatch.network import get_network_speed
 from netwatch.wifi import get_wifi_info
+from netwatch.graph import ping_history, update_ping, render_graph
 
 
 def format_speed(speed):
@@ -21,6 +23,8 @@ def format_speed(speed):
 def make_table():
     download, upload = get_network_speed()
     wifi = get_wifi_info()
+    ping = get_ping()
+    update_ping(ping if ping != "Timeout" else 0)
 
     table = Table(
         title="NetWatch",
@@ -30,10 +34,11 @@ def make_table():
         title_style="bold white",
     )
 
-    table.add_column("Metric", style="dim", width=12)
+    table.add_column("Metric", style="dim", width=14)
     table.add_column("Value", style="bold green")
 
-    table.add_row("Ping", f"{get_ping()} ms")
+    ping_display = f"{ping} ms" if ping != "Timeout" else "[red]Timeout[/red]"
+    table.add_row("Ping", ping_display)
     table.add_row("Download", format_speed(download))
     table.add_row("Upload", format_speed(upload))
 
@@ -44,6 +49,9 @@ def make_table():
         table.add_row("Signal", wifi.get("signal", "Unknown"))
         table.add_row("RX Rate", wifi.get("rx_rate", "Unknown"))
         table.add_row("TX Rate", wifi.get("tx_rate", "Unknown"))
+
+    table.add_row("", "")
+    table.add_row("Ping Graph", Text(render_graph(ping_history), style="green"))
 
     return table
 
