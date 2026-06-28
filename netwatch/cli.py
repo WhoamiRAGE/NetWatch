@@ -10,6 +10,7 @@ from netwatch.vendor import get_vendor
 from netwatch.ports import scan_ports
 from netwatch.device import detect_device
 
+
 def main():
     if "--version" in sys.argv:
         print(f"NetWatch {version('netwatch')}")
@@ -25,6 +26,7 @@ def main():
         table.add_column("Device Type")
         table.add_column("Hostname")
         table.add_column("Open Ports")
+
         hosts = scan_network()
 
         if not hosts:
@@ -35,14 +37,19 @@ def main():
 
         for host in hosts:
             mac = get_mac(host)
+            vendor = get_vendor(mac)
+            hostname = resolve_host(host)
+            ports_str = scan_ports(host)
+            open_ports = [int(p) for p in ports_str.split(", ") if p.strip().isdigit()]
 
             table.add_row(
-    host,
-    get_vendor(mac),
-    mac,
-    resolve_host(host),
-    scan_ports(host)
-)
+                host,
+                vendor,
+                mac,
+                detect_device(vendor, hostname, open_ports),
+                hostname,
+                ports_str
+            )
 
         console.print(table)
         return
