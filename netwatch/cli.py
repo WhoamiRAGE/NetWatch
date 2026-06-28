@@ -101,17 +101,55 @@ def cmd_wifi(console):
     console.print(table)
 
 
+def cmd_trace(console, target):
+    from netwatch.trace import traceroute
+
+    console.print(f"[dim]Tracing route to {target}...[/dim]\n")
+
+    hops, error = traceroute(target)
+
+    if hops is None:
+        console.print(f"[red]{error}[/red]")
+        return
+
+    table = Table(
+        title=f"Traceroute — {target}",
+        header_style="bold cyan",
+        border_style="bright_black",
+        title_style="bold white",
+    )
+    table.add_column("Hop", style="dim", width=5)
+    table.add_column("IP Address", style="bold")
+    table.add_column("Hostname", style="dim")
+    table.add_column("RTT", style="yellow")
+
+    for hop in hops:
+        rtt_style = "red" if hop["ip"] == "*" else "yellow"
+        table.add_row(
+            str(hop["hop"]),
+            hop["ip"],
+            hop["hostname"],
+            f"[{rtt_style}]{hop['rtt']}[/{rtt_style}]",
+        )
+
+    console.print(table)
+
+    if error:
+        console.print(f"[yellow]{error}[/yellow]")
+
+
 def print_help(console):
     console.print("""
 [bold white]NetWatch[/bold white] — Linux Network Monitoring Tool
 
 [bold cyan]Usage:[/bold cyan]
-  netwatch                        Live dashboard (ping, speed, wifi)
-  netwatch scan                   Scan local network for active hosts
-  netwatch scan --range <CIDR>    Scan a specific network range
-  netwatch wifi                   Show wifi interface info
-  netwatch --version              Show version
-  netwatch --help                 Show this help message
+  netwatch                             Live dashboard (ping, speed, wifi)
+  netwatch scan                        Scan local network for active hosts
+  netwatch scan --range <CIDR>         Scan a specific network range
+  netwatch wifi                        Show wifi interface info
+  netwatch trace <host>                Traceroute to a host
+  netwatch --version                   Show version
+  netwatch --help                      Show this help message
 """)
 
 
@@ -143,6 +181,13 @@ def main():
 
         if cmd == "wifi":
             cmd_wifi(console)
+            return
+
+        if cmd == "trace":
+            if len(sys.argv) < 3:
+                console.print("[red]Usage: netwatch trace <host/ip>[/red]")
+                return
+            cmd_trace(console, sys.argv[2])
             return
 
         console.print(f"[red]Unknown command: {cmd}[/red]")
