@@ -38,7 +38,7 @@ Or manually:
 ```bash
 git clone https://github.com/WhoamiRAGE/NetWatch.git
 cd NetWatch
-pip install -e . --break-system-packages
+pip install netwatch-cli --break-system-packages
 ```
 
 ## Usage
