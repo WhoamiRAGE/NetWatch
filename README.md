@@ -3,6 +3,21 @@
 A terminal-based network monitoring and diagnostic tool for Linux.
 Built with Python and Rich for clean, real-time output.
 
+
+## Screenshots
+
+### Live Dashboard
+![Dashboard](assets/dashboard.png)
+
+### Bandwidth Monitor
+![Bandwidth](assets/bandwidth.png)
+
+### Wifi Info
+![Wifi](assets/wifi.png)
+
+### Help
+![Help](assets/help.png)
+
 ## Features
 
 - **Live Dashboard** — real-time ping, download/upload speed, wifi signal and link info
@@ -66,6 +81,23 @@ netwatch --help
 - Root recommended for full scan results (MAC address resolution)
 
 ## Project Structure
+
+```
+netwatch/
+├── cli.py        # Entry point, command routing
+├── dashboard.py  # Live dashboard
+├── scan.py       # Network scanner
+├── ports.py      # Port scanner
+├── device.py     # Device type detection
+├── vendor.py     # MAC vendor lookup
+├── wifi.py       # Wifi info
+├── network.py    # Network speed
+├── ping.py       # Ping
+├── bandwidth.py  # Bandwidth monitor
+├── trace.py      # Traceroute
+├── snmp.py       # SNMP v2c
+└── graph.py      # Ping history graph
+```
 ## License
 
 MIT
