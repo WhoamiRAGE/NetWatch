@@ -13,3 +13,6 @@ dependencies = [
 
 [project.scripts]
 netwatch = "netwatch.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["netwatch*"]
