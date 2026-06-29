@@ -81,6 +81,7 @@ netwatch --help
 - Root recommended for full scan results (MAC address resolution)
 
 ## Project Structure
+<<<<<<< HEAD
 
 ```
 netwatch/
@@ -98,6 +99,25 @@ netwatch/
 ├── snmp.py       # SNMP v2c
 └── graph.py      # Ping history graph
 ```
+=======
+```text
+netwatch/
+├── cli.py         # Entry point, command routing
+├── dashboard.py   # Live dashboard
+├── scan.py        # Network scanner
+├── ports.py       # Port scanner
+├── device.py      # Device type detection
+├── vendor.py      # MAC vendor lookup
+├── wifi.py        # WiFi information
+├── network.py     # Network speed test
+├── ping.py        # Ping utility
+├── bandwidth.py   # Bandwidth monitor
+├── trace.py       # Traceroute
+├── snmp.py        # SNMP v2c support
+└── graph.py       # Ping history graph
+```
+
+>>>>>>> 4d035dd302876642f2ddf28b07309edbb283c7bd
 ## License
 
 MIT
