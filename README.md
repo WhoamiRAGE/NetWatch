@@ -1,104 +1,85 @@
 # NetWatch
 
-A terminal-based network monitoring and diagnostic tool for Linux.
-Built with Python and Rich for clean, real-time output.
+[![PyPI version](https://img.shields.io/pypi/v/netwatch-cli.svg)](https://pypi.org/project/netwatch-cli/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
+Lightweight real-time network monitoring tool for Linux terminals.
 
-## Screenshots
-
-### Live Dashboard
-![Dashboard](assets/dashboard.png)
-
-### Bandwidth Monitor
-![Bandwidth](assets/bandwidth.png)
-
-### Wifi Info
-![Wifi](assets/wifi.png)
-
-### Help
-![Help](assets/help.png)
+![NetWatch dashboard](https://private-user-images.githubusercontent.com/183109999/603031657-0034caf3-da4c-4c5f-b633-c245292ff83b.png)
 
 ## Features
 
-- **Live Dashboard** — real-time ping, download/upload speed, wifi signal and link info
-- **Network Scanner** — discover active hosts with MAC address, vendor, device type, hostname and open ports
-- **Bandwidth Monitor** — per-interface RX/TX speed, packet rate, errors and drops
-- **Traceroute** — hop-by-hop path analysis with RTT and hostname resolution
-- **Wifi Info** — interface, SSID, signal strength, link speed
-- **SNMP v2c** — query network devices for system info and interface table
+- Real-time ping monitoring
+- Live upload/download tracking
+- Terminal dashboard powered by Rich
+- Lightweight and fast
+- Simple CLI interface
 
 ## Installation
 
+### Quick install (from source)
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/WhoamiRAGE/NetWatch/main/install.sh | bash
+git clone git@github.com:WhoamiRAGE/NetWatch.git
+cd NetWatch
+./install.sh
 ```
 
-Or manually:
+This creates a virtual environment, installs NetWatch into it, installs a `net` launcher command to `~/.local/bin`, and wires that directory into your shell's `PATH` (bash, zsh, and fish are all handled automatically). Open a new terminal afterward and run `net`.
+
+### From PyPI
 
 ```bash
-git clone https://github.com/WhoamiRAGE/NetWatch.git
+pip install netwatch-cli
+```
+
+### Manual (from source)
+
+```bash
+git clone git@github.com:WhoamiRAGE/NetWatch.git
 cd NetWatch
-pip install netwatch-cli --break-system-packages
+
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -e .
 ```
 
 ## Usage
 
+Start the dashboard:
+
 ```bash
-# Live dashboard (ping, speed, wifi, ping graph)
-netwatch
-
-# Network scan
-netwatch scan                           # Scan local network (auto subnet)
-netwatch scan --range 10.0.0.0/24      # Scan a specific CIDR range
-
-# Bandwidth monitor
-netwatch bw                             # Default interface
-netwatch bw wlp4s0                      # Specific interface
-
-# Traceroute
-netwatch trace 8.8.8.8                 # Trace by IP
-netwatch trace google.com              # Trace by hostname
-
-# Wifi info
-netwatch wifi
-
-# SNMP
-netwatch snmp 192.168.1.1             # Query with default community (public)
-netwatch snmp 192.168.1.1 private     # Query with custom community string
-
-# General
-netwatch --version
-netwatch --help
+net
 ```
+
+Show version:
+
+```bash
+net --version
+```
+
+## Roadmap
+
+- [ ] Packet loss monitoring
+- [ ] Average ping statistics
+- [ ] Min / Max ping
+- [ ] Wi-Fi signal strength
+- [ ] JSON output
+- [ ] Interface selection
+- [ ] Nix Flake support
 
 ## Requirements
 
-- Python 3.10+
 - Linux
-- `iw` — for wifi info
-- `traceroute` — for traceroute (`sudo pacman -S traceroute`)
-- `net-snmp` — for SNMP (`sudo pacman -S net-snmp`)
-- Root recommended for full scan results (MAC address resolution)
+- Python 3.10+
+- Network access
 
-## Project Structure
+## Status
 
-```
-netwatch/
-├── cli.py        # Entry point, command routing
-├── dashboard.py  # Live dashboard
-├── scan.py       # Network scanner
-├── ports.py      # Port scanner
-├── device.py     # Device type detection
-├── vendor.py     # MAC vendor lookup
-├── wifi.py       # Wifi info
-├── network.py    # Network speed
-├── ping.py       # Ping
-├── bandwidth.py  # Bandwidth monitor
-├── trace.py      # Traceroute
-├── snmp.py       # SNMP v2c
-└── graph.py      # Ping history graph
-```
+Actively in development.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
