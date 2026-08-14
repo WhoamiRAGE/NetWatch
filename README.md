@@ -10,11 +10,14 @@ Lightweight real-time network monitoring tool for Linux terminals.
 
 ## Features
 
-- Real-time ping monitoring
-- Live upload/download tracking
-- Terminal dashboard powered by Rich
+- Live dashboard: ping, speed, and wifi info in one view
+- Local network scanning (with optional CIDR range)
+- Bandwidth monitor, per-interface or default
+- Traceroute to any host
+- SNMP query against a device
+- Wifi interface info
+- Terminal UI powered by Rich
 - Lightweight and fast
-- Simple CLI interface
 
 ## Installation
 
@@ -26,7 +29,7 @@ cd NetWatch
 ./install.sh
 ```
 
-This creates a virtual environment, installs NetWatch into it, installs a `net` launcher command to `~/.local/bin`, and wires that directory into your shell's `PATH` (bash, zsh, and fish are all handled automatically). Open a new terminal afterward and run `net`.
+This creates a virtual environment, installs NetWatch into it, installs a `netwatch` launcher command to `~/.local/bin`, and wires that directory into your shell's `PATH` (bash, zsh, and fish are all handled automatically). Open a new terminal afterward and run `netwatch`.
 
 ### From PyPI
 
@@ -48,16 +51,17 @@ pip install -e .
 
 ## Usage
 
-Start the dashboard:
-
-```bash
-net
 ```
-
-Show version:
-
-```bash
-net --version
+netwatch                       Live dashboard (ping, speed, wifi)
+netwatch scan                  Scan local network for active hosts
+netwatch scan --range <CIDR>   Scan a specific network range
+netwatch wifi                  Show wifi interface info
+netwatch trace <host>          Traceroute to a host
+netwatch bw                    Bandwidth monitor (default interface)
+netwatch bw <interface>        Bandwidth monitor for specific interface
+netwatch snmp <host>           Query device via SNMP
+netwatch --version             Show version
+netwatch --help                Show this help message
 ```
 
 ## Roadmap
@@ -65,9 +69,7 @@ net --version
 - [ ] Packet loss monitoring
 - [ ] Average ping statistics
 - [ ] Min / Max ping
-- [ ] Wi-Fi signal strength
 - [ ] JSON output
-- [ ] Interface selection
 - [ ] Nix Flake support
 
 ## Requirements
