@@ -4,20 +4,23 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Lightweight real-time network monitoring tool for Linux terminals.
+A lightweight, real-time network monitoring tool for the Linux terminal — ping, bandwidth, wifi, scanning, traceroute, and SNMP queries, all in one CLI.
 
 ![NetWatch dashboard](https://private-user-images.githubusercontent.com/183109999/603031657-0034caf3-da4c-4c5f-b633-c245292ff83b.png)
 
+## Why NetWatch
+
+Most network diagnostics on Linux mean reaching for half a dozen separate tools — `ping`, `iftop`, `traceroute`, `iwconfig`, `snmpwalk` — each with its own output format. NetWatch wraps the common ones into a single, fast CLI with a clean terminal UI, so day-to-day network troubleshooting stays in one place.
+
 ## Features
 
-- Live dashboard: ping, speed, and wifi info in one view
-- Local network scanning (with optional CIDR range)
-- Bandwidth monitor, per-interface or default
-- Traceroute to any host
-- SNMP query against a device
-- Wifi interface info
-- Terminal UI powered by Rich
-- Lightweight and fast
+- **Live dashboard** — ping, speed, and wifi info in one view
+- **Network scanning** — discover active hosts on your LAN, with optional CIDR range
+- **Bandwidth monitor** — real-time RX/TX speed, packet rate, errors, and totals, per interface or default
+- **Traceroute** — hop-by-hop path to any host
+- **SNMP queries** — pull device info without a separate SNMP client
+- **Wifi info** — interface details at a glance
+- Built on [Rich](https://github.com/Textualize/rich) for a fast, clean terminal UI
 
 ## Installation
 
@@ -29,7 +32,7 @@ cd NetWatch
 ./install.sh
 ```
 
-This creates a virtual environment, installs NetWatch into it, installs a `netwatch` launcher command to `~/.local/bin`, and wires that directory into your shell's `PATH` (bash, zsh, and fish are all handled automatically). Open a new terminal afterward and run `netwatch`.
+This creates a virtual environment, installs NetWatch into it, installs a `netwatch` launcher to `~/.local/bin`, and wires that directory into your shell's `PATH` — bash, zsh, and fish are all handled automatically. Open a new terminal afterward and run `netwatch`.
 
 ### From PyPI
 
@@ -58,19 +61,11 @@ netwatch scan --range <CIDR>   Scan a specific network range
 netwatch wifi                  Show wifi interface info
 netwatch trace <host>          Traceroute to a host
 netwatch bw                    Bandwidth monitor (default interface)
-netwatch bw <interface>        Bandwidth monitor for specific interface
-netwatch snmp <host>           Query device via SNMP
+netwatch bw <interface>        Bandwidth monitor for a specific interface
+netwatch snmp <host>           Query a device via SNMP
 netwatch --version             Show version
 netwatch --help                Show this help message
 ```
-
-## Roadmap
-
-- [ ] Packet loss monitoring
-- [ ] Average ping statistics
-- [ ] Min / Max ping
-- [ ] JSON output
-- [ ] Nix Flake support
 
 ## Requirements
 
@@ -78,9 +73,9 @@ netwatch --help                Show this help message
 - Python 3.10+
 - Network access
 
-## Status
+## Contributing
 
-Actively in development.
+Issues and pull requests are welcome — see [Issues](https://github.com/WhoamiRAGE/NetWatch/issues).
 
 ## License
 
