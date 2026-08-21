@@ -5,8 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A lightweight, real-time network monitoring tool for the Linux terminal — ping, bandwidth, wifi, scanning, traceroute, and SNMP queries, all in one CLI.
-<img width="731" height="566" alt="Screenshot_20260821_202507" src="https://github.com/user-attachments/assets/282ad490-ff62-444e-a5f5-faf9510e1526" />
-<img width="390" height="337" alt="Screenshot_20260821_202546" src="https://github.com/user-attachments/assets/b6f7f967-3685-46b2-b695-344ceb572d9e" />
+
+<img width="708" height="504" alt="image" src="https://github.com/user-attachments/assets/ee6cf6ed-56e3-4da1-a064-154cba90df9c" />
 
 ![NetWatch dashboard](https://private-user-images.githubusercontent.com/183109999/603031657-0034caf3-da4c-4c5f-b633-c245292ff83b.png)
 
