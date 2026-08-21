@@ -5,56 +5,50 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BIN_DIR="$HOME/.local/bin"
 VENV_DIR="$REPO_DIR/.venv"
 
-echo "==> NetWatch quraşdırılması başladı..."
-echo "    Repo: $REPO_DIR"
+echo "==> NetWatch installer"
+echo "    repo: $REPO_DIR"
 
-# 1. ~/.local/bin qovluğunu yarat
+# 1. Ensure ~/.local/bin exists
 mkdir -p "$BIN_DIR"
 
-# 2. Virtual environment yaradılması və paketlərin quraşdırılması
+# 2. Create virtual environment if not present
 if [ ! -d "$VENV_DIR" ]; then
-    echo "==> Python venv yaradılır..."
+    echo "==> Creating virtual environment..."
     python3 -m venv "$VENV_DIR"
 fi
 
-echo "==> NetWatch quraşdırılır (editable install)..."
-"$VENV_DIR/bin/pip" install --upgrade pip >/dev/null
+# 3. Install package editable
+echo "==> Installing NetWatch (editable install)..."
+"$VENV_DIR/bin/pip" install --upgrade pip >/dev/null 2>&1
 "$VENV_DIR/bin/pip" install -e "$REPO_DIR"
 
-# 3. Executable launcher simvolik linki və ya wrapper yaratmaq
-echo "==> Launcher $BIN_DIR/netwatch ünvanına yerləşdirilir..."
-cat <<EOF > "$BIN_DIR/netwatch"
+# 4. Create launcher script
+echo "==> Installing 'netwatch' launcher to $BIN_DIR..."
+cat << 'LAUNCHER' > "$BIN_DIR/netwatch"
 #!/usr/bin/env bash
-exec "$VENV_DIR/bin/netwatch" "\$@"
-EOF
+exec "$HOME/NetWatch/.venv/bin/netwatch" "$@"
+LAUNCHER
 chmod +x "$BIN_DIR/netwatch"
 
-# 4. PATH konfiqurasiyasını Shell fayllarına əlavə etmək
+# 5. Helper function to update PATH in shell rc files
 add_to_path() {
     local rcfile="$1"
     if [ -f "$rcfile" ]; then
         if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' "$rcfile"; then
             echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$rcfile"
-            echo "    PATH $rcfile faylına əlavə olundu."
+            echo "    Added to $rcfile"
         fi
     fi
 }
 
-echo "==> PATH konfiqurasiyası yoxlanılır..."
+echo "==> Setting up PATH for 'netwatch'..."
 add_to_path "$HOME/.bashrc"
 add_to_path "$HOME/.zshrc"
 add_to_path "$HOME/.profile"
 
-# 5. Cari sessiya üçün PATH-i yeniləmək
-export PATH="$HOME/.local/bin:$PATH"
+# Export PATH for current installer process
+export PATH="$BIN_DIR:$PATH"
 
+echo "==> Done."
 echo ""
-echo "==> Quraşdırılma tamamlandı!"
-echo "==> Test edilir..."
-
-if command -v netwatch >/dev/null 2>&1; then
-    echo "SUCCESS: 'netwatch' artıq sistemdə hazırdır."
-    echo "İndi birbaşa 'netwatch' yazıb işə sala bilərsən."
-else
-    echo "Qeyd: 'source ~/.bashrc' və ya 'export PATH=\"\$HOME/.local/bin:\$PATH\"' icra edin."
-fi
+echo "Open a new terminal (or run 'export PATH=\"\$HOME/.local/bin:\$PATH\"'), then run:  netwatch"
