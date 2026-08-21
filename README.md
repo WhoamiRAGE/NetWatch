@@ -8,7 +8,6 @@ A lightweight, real-time network monitoring tool for the Linux terminal — ping
 
 <img width="708" height="504" alt="image" src="https://github.com/user-attachments/assets/ee6cf6ed-56e3-4da1-a064-154cba90df9c" />
 
-![NetWatch dashboard](https://private-user-images.githubusercontent.com/183109999/603031657-0034caf3-da4c-4c5f-b633-c245292ff83b.png)
 
 ## Why NetWatch
 
